@@ -22,14 +22,17 @@
         <activity android:name=".SelectedRecipeActivity" />
         <activity android:name=".SelectedIngredientActivity" />
 
-        <receiver android:name=".AppWidget">
+        <service android:name=".Adapters.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"
+            android:exported="false" />
+        <receiver android:name=".StackWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/app_widget_info" />
+                android:resource="@xml/stack_widget_provider_info" />
         </receiver>
     </application>
 

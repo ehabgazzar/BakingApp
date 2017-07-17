@@ -39,7 +39,7 @@ public class RecipeDetailFragment extends Fragment {
     private RecyclerView recyclerView;
     private RecipeDetailAdapter mAdapter;
     public static final String TAG = RecipeDetailFragment.class.getSimpleName();
-    static final String DETAIL_RECIPE = "DETAIL_Recipe";
+   public static final String DETAIL_RECIPE = "DETAIL_Recipe";
     TextView ingredients;
 
     public RecipeDetailFragment() {
