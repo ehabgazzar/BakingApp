@@ -44,6 +44,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     public void onCreate() {
         mNetHelper= NetHelper.getInstance(mContext);
+        fetchData();
     }
 
     public void onDestroy() {
@@ -95,11 +96,16 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     }
 
     public void onDataSetChanged() {
+        fetchData();
 
+    }
+
+    void fetchData()
+    {
         mNetHelper.jsonRequest("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-               Log.d("Request Response", "HEREEEEEE");
+                Log.d("Request Response", "HEREEEEEE");
                 recipeItems = JsonParser.getInstnace(mContext).requests(response);
 //                mRecipeAdapter.setData(mRecipesList);
             }
