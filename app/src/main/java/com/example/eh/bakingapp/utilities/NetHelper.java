@@ -1,6 +1,9 @@
 package com.example.eh.bakingapp.utilities;
 
 import android.content.Context;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -9,6 +12,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +59,9 @@ public class NetHelper {
 
         mRequestQueue.add(request);
     }
+
+
+
 
 
 }

@@ -29,6 +29,7 @@ import butterknife.ButterKnife;
 
 public class Ingredient_list_Fragment extends Fragment {
 @BindView(R.id.recycler_view)RecyclerView recyclerView;
+    public static final String RECIPE_INGREDIENT = "RECIPE_Ingredient";
 
     private ArrayList<IngredientItem> ingredientItems = new ArrayList<>();
     private RecipeItem mRecipeItem;
@@ -50,7 +51,12 @@ public class Ingredient_list_Fragment extends Fragment {
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mRecipeItem = arguments.getParcelable(RecipeDetailFragment.DETAIL_RECIPE);
+            mRecipeItem = arguments.getParcelable(Ingredient_list_Fragment.RECIPE_INGREDIENT);
+            if(mRecipeItem ==null)
+            {
+                mRecipeItem = arguments.getParcelable(RecipeDetailFragment.DETAIL_RECIPE);
+            }
+
 
 
 

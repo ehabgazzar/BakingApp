@@ -41,7 +41,7 @@ public class StackWidgetProvider extends AppWidgetProvider {
             remoteViews.setEmptyView(R.id.stackWidgetView, R.id.stackWidgetEmptyView);
 
             // set intent for item click (opens main activity)
-            Intent viewIntent = new Intent(context, RecipeDetailActivity.class);
+            Intent viewIntent = new Intent(context, SelectedIngredientActivity.class);
             viewIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
             viewIntent.setData(Uri.parse(viewIntent.toUri(Intent.URI_INTENT_SCHEME)));
 
@@ -54,14 +54,5 @@ public class StackWidgetProvider extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-    @Override
-    public void onEnabled(Context context) {
-        // Enter relevant functionality for when the first widget is created
-    }
-
-    @Override
-    public void onDisabled(Context context) {
-        // Enter relevant functionality for when the last widget is disabled
-    }
 }
 
