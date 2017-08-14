@@ -17,6 +17,7 @@ import com.example.eh.bakingapp.RecipeDetailFragment;
 import com.example.eh.bakingapp.models.RecipeItem;
 import com.example.eh.bakingapp.utilities.JsonParser;
 import com.example.eh.bakingapp.utilities.NetHelper;
+import com.google.gson.Gson;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -78,12 +79,12 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
 
 
+        Gson gson = new Gson();
+        String myJson = gson.toJson(recipeItem);
 
-            Bundle extras = new Bundle();
-            extras.putParcelable(Ingredient_list_Fragment.RECIPE_INGREDIENT, recipeItem);
             Intent fillInIntent = new Intent();
-            fillInIntent.putExtras(extras);
-            rv.setOnClickFillInIntent(R.id.stackWidgetItem, fillInIntent);
+            fillInIntent.putExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT, myJson);
+            rv.setOnClickFillInIntent(R.id.stackWidgetItemContent, fillInIntent);
 
 
         return rv;

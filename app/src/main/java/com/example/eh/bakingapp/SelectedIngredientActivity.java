@@ -5,34 +5,36 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.eh.bakingapp.models.RecipeItem;
+import com.google.gson.Gson;
 
 public class SelectedIngredientActivity extends AppCompatActivity {
     private RecipeItem mRecipeItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_ingredient);
-
+        Gson gson = new Gson();
 
         if (savedInstanceState == null) {
             Toast.makeText(this, "Activity not null", Toast.LENGTH_SHORT).show();
-            mRecipeItem= getIntent().getParcelableExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT);
-            if(mRecipeItem.getName().isEmpty())
-            {
+            mRecipeItem = gson.fromJson(getIntent().getStringExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT), RecipeItem.class);
+            if (mRecipeItem == null) {
                 Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, mRecipeItem.getName(), Toast.LENGTH_SHORT).show();
+                Bundle arguments = new Bundle();
+                arguments.putParcelable(Ingredient_list_Fragment.RECIPE_INGREDIENT,
+                        mRecipeItem);
+
+
+                Ingredient_list_Fragment fragment = new Ingredient_list_Fragment();
+                fragment.setArguments(arguments);
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.ingredient_container, fragment)
+                        .commit();
             }
-            Bundle arguments = new Bundle();
-            arguments.putParcelable(Ingredient_list_Fragment.RECIPE_INGREDIENT,
-                    getIntent().getParcelableExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT));
-
-
-
-/*            Ingredient_list_Fragment fragment = new Ingredient_list_Fragment();
-            fragment.setArguments(arguments);
-
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.ingredient_container, fragment)
-                    .commit();*/
         }
     }
 }
