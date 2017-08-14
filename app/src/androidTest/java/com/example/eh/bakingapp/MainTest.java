@@ -20,7 +20,7 @@ import static org.hamcrest.core.IsAnything.anything;
  * Created by Eh on 8/14/2017.
  */
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest {
+public class MainTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityTestRule= new ActivityTestRule<MainActivity>(MainActivity.class);
@@ -28,16 +28,27 @@ public class MainActivityTest {
     public void CheckIfRecipeDisplayed() {
         onView((withId(R.id.gridview_recipes))).check(matches(isDisplayed()));
 
-      //  onView((withId(R.id.gridview_recipes))).perform(click());
     }
     @Test
     public void ClickRecipeDisplayed() {
 
-        //onView((withId(R.id.gridview_recipes))).perform(click());
 
         onData(anything()).inAdapterView(withId(R.id.gridview_recipes)).atPosition(0).
                 onChildView(withId(R.id.recipe_name)).perform(click());
+
+//        onData(anything()).inAdapterView(withId(R.id.gridview_recipes)).atPosition(1).
+//                onChildView(withId(R.id.recipe_name)).perform(click());
     }
+    @Test
+    public void CheckIfDetailRecipeDisplayed() {
+        onView((withId(R.id.gridview_recipes))).check(matches(isDisplayed()));
+        onData(anything()).inAdapterView(withId(R.id.gridview_recipes)).atPosition(0).
+                onChildView(withId(R.id.recipe_name)).perform(click());
+        onView((withId(R.id.detail_fragment))).check(matches(isDisplayed()));
+
+    }
+
+
 
 
 }
