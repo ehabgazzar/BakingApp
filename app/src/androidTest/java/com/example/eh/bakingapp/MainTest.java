@@ -41,6 +41,7 @@ public class MainTest {
     }
     @Test
     public void CheckIfDetailRecipeDisplayed() {
+
         onView((withId(R.id.gridview_recipes))).check(matches(isDisplayed()));
         onData(anything()).inAdapterView(withId(R.id.gridview_recipes)).atPosition(0).
                 onChildView(withId(R.id.recipe_name)).perform(click());
