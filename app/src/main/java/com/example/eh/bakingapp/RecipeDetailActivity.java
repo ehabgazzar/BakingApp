@@ -37,7 +37,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         if (findViewById(R.id.selected_container) != null) {
             mTwoPane = true;
 
-            Toast.makeText(this, "mTwoPane = true", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(this, "mTwoPane = true", Toast.LENGTH_SHORT).show();
             if (savedInstanceState == null) {
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.selected_container, new SelectedRecipeFragment(),
@@ -46,7 +46,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
             }
         } else {
             mTwoPane = false;
-            Toast.makeText(this, " mTwoPane = false", Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, " mTwoPane = false", Toast.LENGTH_SHORT).show();
         }
     }
 

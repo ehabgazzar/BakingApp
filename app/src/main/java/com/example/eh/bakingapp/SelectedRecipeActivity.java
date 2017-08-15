@@ -18,7 +18,7 @@ public class SelectedRecipeActivity extends AppCompatActivity  {
         setContentView(R.layout.activity_selected_recipe);
 
         if (savedInstanceState == null) {
-            Toast.makeText(this, "Activity not null", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Activity not null", Toast.LENGTH_SHORT).show();
             Bundle arguments = new Bundle();
             arguments.putParcelable(SelectedRecipeFragment.Selected_RECIPE,
                     getIntent().getParcelableExtra(SelectedRecipeFragment.Selected_RECIPE));

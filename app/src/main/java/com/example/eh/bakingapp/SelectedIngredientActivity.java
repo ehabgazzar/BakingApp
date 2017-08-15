@@ -17,12 +17,13 @@ public class SelectedIngredientActivity extends AppCompatActivity {
         Gson gson = new Gson();
 
         if (savedInstanceState == null) {
-            Toast.makeText(this, "Activity not null", Toast.LENGTH_SHORT).show();
-            mRecipeItem = gson.fromJson(getIntent().getStringExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT), RecipeItem.class);
+         //   Toast.makeText(this, "Activity not null", Toast.LENGTH_SHORT).show();
+            mRecipeItem=getIntent().getParcelableExtra(RecipeDetailFragment.DETAIL_RECIPE);
             if (mRecipeItem == null) {
+                mRecipeItem = gson.fromJson(getIntent().getStringExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT), RecipeItem.class);
                 Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(this, mRecipeItem.getName(), Toast.LENGTH_SHORT).show();
+          //      Toast.makeText(this, mRecipeItem.getName(), Toast.LENGTH_SHORT).show();
                 Bundle arguments = new Bundle();
                 arguments.putParcelable(Ingredient_list_Fragment.RECIPE_INGREDIENT,
                         mRecipeItem);

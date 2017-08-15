@@ -15,6 +15,11 @@ public class StepItem implements Parcelable {
     String description;
     String videoURL;
 
+
+
+
+    String thumbnailURL;
+
     public StepItem()
     {
 
@@ -64,6 +69,13 @@ public class StepItem implements Parcelable {
 
     public String getVideoURL() {
         return videoURL;
+    }
+    public String getThumbnailURL() {
+        return thumbnailURL;
+    }
+
+    public void setThumbnailURL(String thumbnailURL) {
+        this.thumbnailURL = thumbnailURL;
     }
 
     public void setVideoURL(String videoURL) {

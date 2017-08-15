@@ -82,13 +82,13 @@ public class SelectedRecipeFragment extends Fragment {
             position=Integer.parseInt(arguments.getString(SelectedRecipeFragment.RECIPE_POSITION));
             textView= (TextView) rootView.findViewById(R.id.textView);
             textView.setText(stepItem.getDescription());
-            Toast.makeText(getActivity(), position+"", Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(getActivity(), position+"", Toast.LENGTH_SHORT).show();
             next= (Button) rootView.findViewById(R.id.button2);
            if(next!=null) {
                next.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                       Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
+           //            Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
                        if (position < stepItems.size() - 1) {
                            position++;
 
@@ -216,6 +216,9 @@ public class SelectedRecipeFragment extends Fragment {
     public void onStop() {
         super.onStop();
         Log.v(TAG,"onStop()...");
+        if(player!=null) {
+            player.release();
+        }
     }
 
     @Override
@@ -235,6 +238,9 @@ public class SelectedRecipeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         Log.v(TAG,"onPause()...");
+        if(player!=null) {
+            player.release();
+        }
     }
 
     @Override
@@ -246,4 +252,5 @@ public class SelectedRecipeFragment extends Fragment {
      }
 
     }
+
 }

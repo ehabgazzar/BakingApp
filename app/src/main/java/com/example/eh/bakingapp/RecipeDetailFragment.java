@@ -1,5 +1,6 @@
 package com.example.eh.bakingapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -65,7 +66,7 @@ public class RecipeDetailFragment extends Fragment {
         ingredients.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle arguments = new Bundle();
+              /*  Bundle arguments = new Bundle();
                 arguments.putParcelable(RecipeDetailFragment.DETAIL_RECIPE, mRecipeItem);
 
                 Fragment fragment = null;
@@ -80,6 +81,11 @@ public class RecipeDetailFragment extends Fragment {
                     ingredients.setVisibility(View.INVISIBLE);
 
                 }
+*/
+                Intent intent = new Intent(getActivity(), SelectedIngredientActivity.class);
+                intent.putExtra(RecipeDetailFragment.DETAIL_RECIPE, mRecipeItem);
+                startActivity(intent);
+
             }
         });
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
@@ -100,7 +106,7 @@ public class RecipeDetailFragment extends Fragment {
       stepItems=mRecipeItem.getStepItems();
       Log.d("LEng",""+stepItems.size());
 
-      mAdapter = new RecipeDetailAdapter(stepItems, new CustomItemClickListener() {
+      mAdapter = new RecipeDetailAdapter(getActivity(),stepItems, new CustomItemClickListener() {
           @Override
           public void onItemClick(View v, int position) {
               Log.d(TAG, "Element " + position + " clicked.");

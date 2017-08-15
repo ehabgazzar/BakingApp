@@ -1,8 +1,14 @@
 package com.example.eh.bakingapp;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +18,10 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.eh.bakingapp.Adapters.CustomItemClickListener;
 import com.example.eh.bakingapp.Adapters.RecipeAdapter;
 import com.example.eh.bakingapp.models.RecipeItem;
+import com.example.eh.bakingapp.utilities.DividerItemDecoration;
 import com.example.eh.bakingapp.utilities.JsonParser;
 import com.example.eh.bakingapp.utilities.NetHelper;
 
@@ -24,12 +32,13 @@ import butterknife.ButterKnife;
 
 public class MainFragment extends Fragment {
 
-
+    public static final String TAG = MainFragment.class.getSimpleName();
     private RecipeAdapter mRecipeAdapter;
     private ArrayList<RecipeItem> mRecipesList = null;
     NetHelper mNetHelper;
     Context mContext;
-    @BindView(R.id.gridview_recipes) GridView gridView;
+    private RecyclerView recyclerView;
+
     public MainFragment() {
         // Required empty public constructor
     }
@@ -41,26 +50,27 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mRecipeAdapter =
-                new RecipeAdapter(getActivity(), new ArrayList<RecipeItem>());
+
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
         mContext=this.getActivity();
         mNetHelper= NetHelper.getInstance(mContext);
-        ButterKnife.bind(this,rootView);
-        gridView.setAdapter(mRecipeAdapter);
 
-        fetchData();
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.gridview_recipes);
 
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-             //   Toast.makeText(mContext, ""+position, Toast.LENGTH_SHORT).show();
-                RecipeItem recipeItem = mRecipeAdapter.getItem(position);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
 
-                ((Callback) getActivity()).onItemSelected(recipeItem);
-            }
-        });
+        recyclerView.setHasFixedSize(true);
+
+
+        ConnectivityManager conMgr =  (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if (netInfo == null){
+            Toast.makeText(mContext, "Please Check Internet Connection ", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            fetchData();
+        }
 
         return rootView;
     }
@@ -73,12 +83,27 @@ public class MainFragment extends Fragment {
             public void onResponse(String response) {
             //    Log.d("Request Response", response);
                mRecipesList=JsonParser.getInstnace(mContext).requests(response);
-               mRecipeAdapter.setData(mRecipesList);
+                mRecipeAdapter=new RecipeAdapter(getActivity(),mRecipesList,new CustomItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+                        Log.d(TAG, "Element " + position + " clicked.");
+
+                        RecipeItem recipeItem=mRecipeAdapter.getItem(position);
+                        ((Callback) getActivity()).onItemSelected(recipeItem);
+                    }
+                });
+             //  mRecipeAdapter.setData(mRecipesList);
+
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                recyclerView.setLayoutManager(mLayoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(mRecipeAdapter);
+
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(mContext, "Error in loading please try again", Toast.LENGTH_SHORT).show();
             }
         });
     }

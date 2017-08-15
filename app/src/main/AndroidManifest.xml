@@ -3,6 +3,7 @@
     package="com.example.eh.bakingapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -22,9 +23,11 @@
         <activity android:name=".SelectedRecipeActivity" />
         <activity android:name=".SelectedIngredientActivity" />
 
-        <service android:name=".Adapters.StackWidgetService"
-            android:permission="android.permission.BIND_REMOTEVIEWS"
-            android:exported="false" />
+        <service
+            android:name=".Adapters.StackWidgetService"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <receiver android:name=".StackWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -34,6 +37,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/stack_widget_provider_info" />
         </receiver>
+
+        <activity android:name=".IngredientActivity"></activity>
     </application>
 
 </manifest>

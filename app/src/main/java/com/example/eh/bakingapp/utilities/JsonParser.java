@@ -72,6 +72,7 @@ public class JsonParser {
                     stepItem.setDescription(Item.getString("description"));
                     stepItem.setShortDescription(Item.getString("shortDescription"));
                     stepItem.setVideoURL(Item.getString("videoURL"));
+                    stepItem.setThumbnailURL(Item.getString("thumbnailURL"));
                     StepItems.add(stepItem);
 
                 }
@@ -80,6 +81,7 @@ public class JsonParser {
 //***************************************************************************************
                 newItem.setId(item.getInt("id"));
                 newItem.setName(item.getString("name"));
+                newItem.setImage(item.getString("image"));
                 newItem.setIngredientItems(IngredientItems);
                 newItem.setStepItems(StepItems);
                 newItem.setServings(item.getString("servings"));

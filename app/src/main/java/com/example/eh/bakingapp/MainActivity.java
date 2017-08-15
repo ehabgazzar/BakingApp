@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import com.example.eh.bakingapp.models.RecipeItem;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity implements MainFragment.Callback {
     private boolean mTwoPane;
     @Override
@@ -20,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements MainFragment.Call
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
 
         fragmentManager.beginTransaction()
-                .add(R.id.container, mainFragment)
+                .replace(R.id.container, mainFragment)
                 .commit();
 
     }
