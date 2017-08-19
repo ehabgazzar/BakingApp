@@ -71,13 +71,13 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
 
 
-                rv.setTextViewText(R.id.stackWidgetItemContent, ingredientItem.getIngredient());
-                rv.setTextViewText(R.id.stackWidgetItemContent2, ingredientItem.getQuantity()+" "+ingredientItem.getMeasure());
+                rv.setTextViewText(R.id.stackWidgetItemContent,"-> " + ingredientItem.getIngredient() + "\n    Quantity : " + ingredientItem.getQuantity() + " " + ingredientItem.getMeasure() + "\n");
+                //rv.setTextViewText(R.id.stackWidgetItemContent2, ingredientItem.getQuantity()+" "+ingredientItem.getMeasure());
 
 
 
-        Gson gson = new Gson();
-        String myJson = gson.toJson(ingredientItem);
+//        Gson gson = new Gson();
+//        String myJson = gson.toJson(ingredientItem);
 
 //            Intent fillInIntent = new Intent();
 //            fillInIntent.putExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT, myJson);
