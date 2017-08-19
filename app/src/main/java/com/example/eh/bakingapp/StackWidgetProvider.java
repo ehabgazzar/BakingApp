@@ -39,6 +39,22 @@ public class StackWidgetProvider extends AppWidgetProvider {
     }
 
     @Override
+    public void onReceive(Context context, Intent intent) {
+        AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        int[] appWidgetIds;
+        if (intent.getAction().equals("android.appwidget.action.APPWIDGET_UPDATE")) {
+             appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
+            //int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
+         //   Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
+            for(int i = 0 ; i<appWidgetIds.length;i++) {
+                updateAppWidget(context, mgr, appWidgetIds[i]);
+            }
+        }
+
+        super.onReceive(context, intent);
+    }
+
+    @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
         Log.d("onUpdate","Called");
