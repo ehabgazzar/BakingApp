@@ -107,6 +107,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
         Gson gson = new Gson();
         String gs=sharedGetter.getDesiredRecipe();
         RecipeItem ri=gson.fromJson(gs,RecipeItem.class);
+        if(ri!=null)
         ingredientItems =ri.getIngredientItems();
         // fetchData();
 
