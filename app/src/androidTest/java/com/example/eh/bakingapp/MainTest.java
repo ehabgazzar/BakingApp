@@ -1,5 +1,6 @@
 package com.example.eh.bakingapp;
 
+import android.os.SystemClock;
 import android.support.test.espresso.contrib.RecyclerViewActions;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
@@ -40,14 +41,24 @@ public class MainTest {
         onView((withId(R.id.gridview_recipes))).check(matches(isDisplayed()));
 
     }
-*/
+
+    @Test
+    public void CheckRecipeNameDisplayed() {
+        onView(withId(R.id.gridview_recipes)).perform(RecyclerViewActions.scrollToPosition(3));
+        SystemClock.sleep(2000);
+
+        onView(withText("Cheesecake")).check(matches(isDisplayed()));
+
+    }
     @Test
     public void ClickDisplayedRecipe() {
 
+       onView(withId(R.id.gridview_recipes)).perform(RecyclerViewActions.scrollToPosition(3));
+        SystemClock.sleep(2000);
+
         onView(ViewMatchers.withId(R.id.gridview_recipes))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(0,
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3,
                         click()));
-//        onView(withId(R.id.gridview_recipes)).perform(RecyclerViewActions.scrollToPosition(3));
        // onView(withId(R.id.gridview_recipes)).perform(RecyclerViewActions.actionOnItemAtPosition(0,click()));
 //        onData(anything()).inAdapterView(withId(R.id.gridview_recipes)).atPosition(0).
 //                onChildView(withId(R.id.recipe_name)).perform(click());
@@ -55,17 +66,35 @@ public class MainTest {
 //        onData(anything()).inAdapterView(withId(R.id.gridview_recipes)).atPosition(1).
 //                onChildView(withId(R.id.recipe_name)).perform(click());
     }
-/*
     @Test
     public void CheckIfDetailRecipeDisplayed() {
 
         onView((withId(R.id.gridview_recipes))).check(matches(isDisplayed()));
-        onData(anything()).inAdapterView(withId(R.id.gridview_recipes)).atPosition(0).
-                onChildView(withId(R.id.recipe_name)).perform(click());
+        SystemClock.sleep(2000);
+
+        onView(ViewMatchers.withId(R.id.gridview_recipes))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3,
+                        click()));
         onView((withId(R.id.detail_fragment))).check(matches(isDisplayed()));
 
     }
 */
+
+    @Test
+    public void ClickStepItem() {
+
+        onView(withId(R.id.gridview_recipes)).perform(RecyclerViewActions.scrollToPosition(3));
+        SystemClock.sleep(3000);
+
+        onView(ViewMatchers.withId(R.id.gridview_recipes))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3,
+                        click()));
+        onView(ViewMatchers.withId(R.id.recycler_view))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0,
+                        click()));
+
+    }
+
 
 
 

@@ -16,5 +16,14 @@
         android:paddingLeft="0dp"
         android:paddingRight="6dp"
         android:paddingTop="6dp"></TextView>
-
+    <TextView
+        android:id="@+id/stackWidgetItemContent2"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:maxLines="7"
+        android:paddingBottom="6dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="6dp"
+        android:paddingTop="6dp"></TextView>
 </LinearLayout>

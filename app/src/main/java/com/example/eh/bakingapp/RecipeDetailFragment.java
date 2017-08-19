@@ -23,6 +23,9 @@ import com.example.eh.bakingapp.Adapters.RecipeDetailAdapter;
 import com.example.eh.bakingapp.models.RecipeItem;
 import com.example.eh.bakingapp.models.StepItem;
 import com.example.eh.bakingapp.utilities.DividerItemDecoration;
+import com.example.eh.bakingapp.utilities.SharedGetter;
+import com.example.eh.bakingapp.utilities.SharedSaver;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ import butterknife.BindView;
 
 public class RecipeDetailFragment extends Fragment {
     private ArrayList <StepItem> stepItems = new ArrayList<>();
-
+    SharedGetter sharedGetter;
     private RecipeItem mRecipeItem;
     private RecyclerView recyclerView;
     private RecipeDetailAdapter mAdapter;
@@ -52,11 +55,18 @@ public class RecipeDetailFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container,  Bundle savedInstanceState) {
-
+        sharedGetter = SharedGetter.getInstance(this.getContext());
         Bundle arguments = getArguments();
         if (arguments != null) {
             mRecipeItem = arguments.getParcelable(RecipeDetailFragment.DETAIL_RECIPE);
+            Gson gson = new Gson();
+            String recipeItem = gson.toJson(mRecipeItem);
 
+            SharedSaver.getInstance(this.getContext()).setDesiredRecipe(recipeItem);
+         String gs=sharedGetter.getDesiredRecipe();
+          RecipeItem ri=gson.fromJson(gs,RecipeItem.class);
+
+            Toast.makeText(this.getActivity(), ri.getName(), Toast.LENGTH_LONG).show();
 
 
 

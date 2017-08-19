@@ -41,12 +41,12 @@ public class StackWidgetProvider extends AppWidgetProvider {
             remoteViews.setEmptyView(R.id.stackWidgetView, R.id.stackWidgetEmptyView);
 
             // set intent for item click (opens main activity)
-            Intent viewIntent = new Intent(context, SelectedIngredientActivity.class);
-            viewIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
-            viewIntent.setData(Uri.parse(viewIntent.toUri(Intent.URI_INTENT_SCHEME)));
-
-            PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, 0);
-            remoteViews.setPendingIntentTemplate(R.id.stackWidgetView, viewPendingIntent);
+//            Intent viewIntent = new Intent(context, SelectedIngredientActivity.class);
+//            viewIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
+//            viewIntent.setData(Uri.parse(viewIntent.toUri(Intent.URI_INTENT_SCHEME)));
+//
+//            PendingIntent viewPendingIntent = PendingIntent.getActivity(context, 0, viewIntent, 0);
+//            remoteViews.setPendingIntentTemplate(R.id.stackWidgetView, viewPendingIntent);
 
             // update widget
             appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
