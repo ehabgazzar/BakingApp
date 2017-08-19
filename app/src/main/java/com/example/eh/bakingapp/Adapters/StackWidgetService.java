@@ -32,7 +32,9 @@ import java.util.List;
 public class StackWidgetService extends RemoteViewsService {
     @Override
     public RemoteViewsFactory onGetViewFactory(Intent intent) {
+        Log.d("RemoteViewsService","Called");
         return new StackRemoteViewsFactory(this.getApplicationContext(), intent);
+
     }
 }
 
@@ -44,6 +46,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     SharedGetter sharedGetter;
 
     public StackRemoteViewsFactory(Context context, Intent intent) {
+        Log.d("StackRemoteViewsFactory","Called");
         mContext = context;
         mAppWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
     }

@@ -7,6 +7,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.example.eh.bakingapp.Adapters.StackWidgetService;
@@ -26,7 +27,7 @@ public class StackWidgetProvider extends AppWidgetProvider {
     private List<IngredientItem> ingredientItems = new ArrayList<>();
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
-      ;
+        Log.d("AppWidgetProvider","Called");
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stack_widget_provider);
@@ -40,6 +41,7 @@ public class StackWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
+        Log.d("onUpdate","Called");
         sharedGetter = SharedGetter.getInstance(context);
         for (int i = 0; i < appWidgetIds.length; ++i) {
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.stack_widget_provider);
@@ -75,9 +77,10 @@ public class StackWidgetProvider extends AppWidgetProvider {
 //            remoteViews.setPendingIntentTemplate(R.id.stackWidgetView, viewPendingIntent);
 
             // update widget
-        //    appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
-            AppWidgetManager.getInstance(context).updateAppWidget(
-                    new ComponentName(context, StackWidgetProvider.class), remoteViews);
+
+            appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
+//            AppWidgetManager.getInstance(context).updateAppWidget(
+//                    new ComponentName(context, StackWidgetProvider.class), remoteViews);
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
