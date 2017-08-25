@@ -25,17 +25,18 @@ import java.util.List;
 public class StackWidgetProvider extends AppWidgetProvider {
      SharedGetter sharedGetter;
     private List<IngredientItem> ingredientItems = new ArrayList<>();
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                int [] appWidgetId) {
         Log.d("AppWidgetProvider","Called");
 
         // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.stack_widget_provider);
 
+
         // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
-//        appWidgetManager.getInstance(context).updateAppWidget(
-//                new ComponentName(context, StackWidgetProvider.class), views);
+//        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.getInstance(context).updateAppWidget(
+               new ComponentName(context, StackWidgetProvider.class), views);
     }
 
     @Override
@@ -46,9 +47,9 @@ public class StackWidgetProvider extends AppWidgetProvider {
              appWidgetIds = intent.getIntArrayExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS);
             //int viewIndex = intent.getIntExtra(EXTRA_ITEM, 0);
          //   Toast.makeText(context, "Touched view " + viewIndex, Toast.LENGTH_SHORT).show();
-            for(int i = 0 ; i<appWidgetIds.length;i++) {
-                updateAppWidget(context, mgr, appWidgetIds[i]);
-            }
+
+                updateAppWidget(context, mgr, appWidgetIds);
+
         }
 
         super.onReceive(context, intent);
@@ -100,6 +101,8 @@ public class StackWidgetProvider extends AppWidgetProvider {
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
+
+
 
 }
 

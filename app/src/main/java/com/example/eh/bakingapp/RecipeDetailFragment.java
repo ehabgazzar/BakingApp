@@ -65,11 +65,17 @@ public class RecipeDetailFragment extends Fragment {
             String recipeItem = gson.toJson(mRecipeItem);
 
             SharedSaver.getInstance(this.getContext()).setDesiredRecipe(recipeItem);
+
             Intent intent = new Intent(this.getActivity(), StackWidgetProvider.class);
             intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
             int ids[] = AppWidgetManager.getInstance(this.getActivity().getApplication()).getAppWidgetIds(new ComponentName(this.getActivity().getApplication(), StackWidgetProvider.class));
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
             this.getActivity().sendBroadcast(intent);
+            AppWidgetManager mgr = AppWidgetManager.getInstance(this.getContext());
+            StackWidgetProvider.updateAppWidget(this.getActivity(),mgr,ids);
+
+
+
          String gs=sharedGetter.getDesiredRecipe();
           RecipeItem ri=gson.fromJson(gs,RecipeItem.class);
 
