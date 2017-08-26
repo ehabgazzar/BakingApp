@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/dark_gray">
     <StackView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/stackWidgetView"
         android:layout_width="match_parent"
@@ -12,7 +13,6 @@
         android:layout_height="match_parent"
         android:text="@string/no_activities"
         android:gravity="center"
-        android:textColor="#ffffff"
         android:textStyle="bold"
         android:textSize="16sp" />
 </FrameLayout>

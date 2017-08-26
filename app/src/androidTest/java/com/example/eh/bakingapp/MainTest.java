@@ -35,7 +35,6 @@ public class MainTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mainActivityTestRule= new ActivityTestRule<MainActivity>(MainActivity.class);
-/*
     @Test
     public void CheckIfRecipeDisplayed() {
         onView((withId(R.id.gridview_recipes))).check(matches(isDisplayed()));
@@ -78,7 +77,7 @@ public class MainTest {
         onView((withId(R.id.detail_fragment))).check(matches(isDisplayed()));
 
     }
-*/
+
 
     @Test
     public void ClickStepItem() {
@@ -96,7 +95,41 @@ public class MainTest {
     }
 
 
+    @Test
+    public void ClickNextStepItem() {
 
+        onView(withId(R.id.gridview_recipes)).perform(RecyclerViewActions.scrollToPosition(3));
+        SystemClock.sleep(3000);
+
+        onView(ViewMatchers.withId(R.id.gridview_recipes))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3,
+                        click()));
+        onView(ViewMatchers.withId(R.id.recycler_view))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0,
+                        click()));
+        onView(ViewMatchers.withId(R.id.button2))
+                .perform(click());
+        SystemClock.sleep(2000);
+
+    }
+
+    @Test
+    public void ClickPreviousStepItem() {
+
+        onView(withId(R.id.gridview_recipes)).perform(RecyclerViewActions.scrollToPosition(3));
+        SystemClock.sleep(3000);
+
+        onView(ViewMatchers.withId(R.id.gridview_recipes))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(3,
+                        click()));
+        onView(ViewMatchers.withId(R.id.recycler_view))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0,
+                        click()));
+        onView(ViewMatchers.withId(R.id.button3))
+                .perform(click());
+
+        SystemClock.sleep(2000);
+    }
 
 
 }
