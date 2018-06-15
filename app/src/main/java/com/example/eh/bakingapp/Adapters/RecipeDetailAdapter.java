@@ -54,14 +54,7 @@ public class RecipeDetailAdapter extends RecyclerView.Adapter<RecipeDetailAdapte
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recipe_detail_item, parent, false);
         final MyViewHolder myViewHolder = new MyViewHolder(itemView);
-       /* itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "Element " +  myViewHolder.getAdapterPosition() + " clicked.");
 
-
-            }
-        });*/
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

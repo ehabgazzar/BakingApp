@@ -1,21 +1,16 @@
 package com.example.eh.bakingapp;
 
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import com.example.eh.bakingapp.models.IngredientItem;
-import com.example.eh.bakingapp.models.RecipeItem;
 import com.example.eh.bakingapp.models.StepItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailFragment.Callback,Ingredient_list_Fragment.Callback{
+public class RecipeDetailActivity extends AppCompatActivity implements RecipeDetailFragment.Callback,IngredientFragment.Callback{
     private boolean mTwoPane;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -27,8 +27,8 @@ import com.example.eh.bakingapp.utilities.NetHelper;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
+
 
 public class MainFragment extends Fragment {
 
@@ -92,7 +92,6 @@ public class MainFragment extends Fragment {
                         ((Callback) getActivity()).onItemSelected(recipeItem);
                     }
                 });
-             //  mRecipeAdapter.setData(mRecipesList);
 
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                 recyclerView.setLayoutManager(mLayoutManager);

@@ -20,16 +20,16 @@ public class SelectedIngredientActivity extends AppCompatActivity {
          //   Toast.makeText(this, "Activity not null", Toast.LENGTH_SHORT).show();
             mRecipeItem=getIntent().getParcelableExtra(RecipeDetailFragment.DETAIL_RECIPE);
             if (mRecipeItem == null) {
-                mRecipeItem = gson.fromJson(getIntent().getStringExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT), RecipeItem.class);
+                mRecipeItem = gson.fromJson(getIntent().getStringExtra(IngredientFragment.RECIPE_INGREDIENT), RecipeItem.class);
                 Toast.makeText(this, "Empty", Toast.LENGTH_SHORT).show();
             } else {
           //      Toast.makeText(this, mRecipeItem.getName(), Toast.LENGTH_SHORT).show();
                 Bundle arguments = new Bundle();
-                arguments.putParcelable(Ingredient_list_Fragment.RECIPE_INGREDIENT,
+                arguments.putParcelable(IngredientFragment.RECIPE_INGREDIENT,
                         mRecipeItem);
 
 
-                Ingredient_list_Fragment fragment = new Ingredient_list_Fragment();
+                IngredientFragment fragment = new IngredientFragment();
                 fragment.setArguments(arguments);
 
                 getSupportFragmentManager().beginTransaction()

@@ -83,7 +83,7 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 //        String myJson = gson.toJson(ingredientItem);
 
 //            Intent fillInIntent = new Intent();
-//            fillInIntent.putExtra(Ingredient_list_Fragment.RECIPE_INGREDIENT, myJson);
+//            fillInIntent.putExtra(IngredientFragment.RECIPE_INGREDIENT, myJson);
 //            rv.setOnClickFillInIntent(R.id.stackWidgetItemContent, fillInIntent);
 
 

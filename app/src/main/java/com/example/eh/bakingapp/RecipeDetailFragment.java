@@ -93,13 +93,13 @@ public class RecipeDetailFragment extends Fragment {
                 arguments.putParcelable(RecipeDetailFragment.DETAIL_RECIPE, mRecipeItem);
 
                 Fragment fragment = null;
-                fragment = new Ingredient_list_Fragment();
+                fragment = new IngredientFragment();
                 fragment.setArguments(arguments);
                 if(fragment!=null) {
 
                     final FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-                    ft.replace(R.id.detail_container, fragment, Ingredient_list_Fragment.TAG)
+                    ft.replace(R.id.detail_container, fragment, IngredientFragment.TAG)
                             .commit();
                     ingredients.setVisibility(View.INVISIBLE);
 

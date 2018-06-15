@@ -12,10 +12,8 @@ import android.view.ViewGroup;
 
 import com.example.eh.bakingapp.Adapters.CustomItemClickListener;
 import com.example.eh.bakingapp.Adapters.IngredientAdapter;
-import com.example.eh.bakingapp.Adapters.RecipeDetailAdapter;
 import com.example.eh.bakingapp.models.IngredientItem;
 import com.example.eh.bakingapp.models.RecipeItem;
-import com.example.eh.bakingapp.models.StepItem;
 import com.example.eh.bakingapp.utilities.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -23,11 +21,12 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 /**
  * Created by Eh on 7/8/2017.
  */
 
-public class Ingredient_list_Fragment extends Fragment {
+public class IngredientFragment extends Fragment {
 @BindView(R.id.recycler_view)RecyclerView recyclerView;
     public static final String RECIPE_INGREDIENT = "RECIPE_Ingredient";
 
@@ -35,11 +34,11 @@ public class Ingredient_list_Fragment extends Fragment {
     private RecipeItem mRecipeItem;
    // private RecyclerView recyclerView;
     private IngredientAdapter mAdapter;
-    public static final String TAG = Ingredient_list_Fragment.class.getSimpleName();
+    public static final String TAG = IngredientFragment.class.getSimpleName();
     static final String DETAIL_RECIPE = "DETAIL_Recipe";
 
 
-    public Ingredient_list_Fragment() {
+    public IngredientFragment() {
         // Required empty public constructor
     }
     public interface Callback {
@@ -51,7 +50,7 @@ public class Ingredient_list_Fragment extends Fragment {
 
         Bundle arguments = getArguments();
         if (arguments != null) {
-            mRecipeItem = arguments.getParcelable(Ingredient_list_Fragment.RECIPE_INGREDIENT);
+            mRecipeItem = arguments.getParcelable(IngredientFragment.RECIPE_INGREDIENT);
             if(mRecipeItem ==null)
             {
                 mRecipeItem = arguments.getParcelable(RecipeDetailFragment.DETAIL_RECIPE);
@@ -64,6 +63,7 @@ public class Ingredient_list_Fragment extends Fragment {
         }
         View rootView = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
         ButterKnife.bind(this,rootView);
+
        // recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
 
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
@@ -88,7 +88,7 @@ public class Ingredient_list_Fragment extends Fragment {
                 Log.d(TAG, "Element " + position + " clicked.");
 
                 IngredientItem stepItem=mAdapter.getItem(position);
-                ((Ingredient_list_Fragment.Callback) getActivity()).onItemSelected(stepItem, ingredientItems,position);
+                ((IngredientFragment.Callback) getActivity()).onItemSelected(stepItem, ingredientItems,position);
             }
         });
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
