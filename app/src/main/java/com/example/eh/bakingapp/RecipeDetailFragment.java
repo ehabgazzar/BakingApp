@@ -79,7 +79,7 @@ public class RecipeDetailFragment extends Fragment {
          String gs=sharedGetter.getDesiredRecipe();
           RecipeItem ri=gson.fromJson(gs,RecipeItem.class);
 
-            Toast.makeText(this.getActivity(), ri.getName(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(this.getActivity(), ri.getName(), Toast.LENGTH_LONG).show();
 
 
 

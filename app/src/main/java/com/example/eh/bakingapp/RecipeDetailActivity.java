@@ -16,7 +16,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
@@ -42,6 +42,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
                         .commit();
             }
         } else {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             mTwoPane = false;
         //    Toast.makeText(this, " mTwoPane = false", Toast.LENGTH_SHORT).show();
         }
