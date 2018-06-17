@@ -18,10 +18,20 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
-        <activity android:name=".RecipeDetailActivity" />
-        <activity android:name=".SelectedRecipeActivity" />
-        <activity android:name=".SelectedIngredientActivity" />
+        <activity android:name=".RecipeDetailActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".SelectedRecipeActivity" >
+
+        </activity>
+        <activity android:name=".SelectedIngredientActivity" >
+
+        </activity>
 
         <service
             android:name=".Adapters.StackWidgetService"

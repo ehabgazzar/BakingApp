@@ -16,6 +16,8 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (savedInstanceState == null) {
             Bundle arguments = new Bundle();
             arguments.putParcelable(RecipeDetailFragment.DETAIL_RECIPE,
@@ -44,6 +46,7 @@ public class RecipeDetailActivity extends AppCompatActivity implements RecipeDet
         //    Toast.makeText(this, " mTwoPane = false", Toast.LENGTH_SHORT).show();
         }
     }
+
 
     @Override
     public void onItemSelected(StepItem stepItem, ArrayList<StepItem> stepsList, int pos ) {
