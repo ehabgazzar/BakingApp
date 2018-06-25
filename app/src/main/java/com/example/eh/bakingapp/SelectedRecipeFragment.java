@@ -65,12 +65,14 @@ public class SelectedRecipeFragment extends Fragment {
     static final String Selected_RECIPE = "Selected_step";
     static final String RECIPES_LIST = "Recipes_list";
     static final String RECIPE_POSITION = "Recipes_position";
-
+    private Uri mp4VideoUri;
+    public long exoPlayerCurrentPosition = 0;
     public SelectedRecipeFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
 
         Bundle arguments = getArguments();
         if (arguments != null) {
@@ -78,9 +80,22 @@ public class SelectedRecipeFragment extends Fragment {
              rootView = inflater.inflate(R.layout.fragment_selected_recipe, container, false);
             linearLayout = (LinearLayout) rootView.findViewById(R.id.select_layout) ;
             linearLayout.setVisibility(View.VISIBLE);
-            stepItem=arguments.getParcelable(SelectedRecipeFragment.Selected_RECIPE);
+
             stepItems=arguments.getParcelableArrayList(SelectedRecipeFragment.RECIPES_LIST);
-            position=Integer.parseInt(arguments.getString(SelectedRecipeFragment.RECIPE_POSITION));
+            if(savedInstanceState != null){
+                //long videoPosition = savedInstanceState.getLong("playerPosition");
+                exoPlayerCurrentPosition = savedInstanceState.getLong("exoPlayerCurrentPosition");
+                position=savedInstanceState.getInt("ItemPosition");
+                stepItem=stepItems.get(position);
+                //mExoPlayer.seekTo(videoPosition);
+                Log.e("mExoPlayer. will be",exoPlayerCurrentPosition+");");
+            }
+            else {
+                position = Integer.parseInt(arguments.getString(SelectedRecipeFragment.RECIPE_POSITION));
+                stepItem=arguments.getParcelable(SelectedRecipeFragment.Selected_RECIPE);
+            }
+
+
             textView= (TextView) rootView.findViewById(R.id.textView);
             textView.setText(stepItem.getDescription());
          //   Toast.makeText(getActivity(), position+"", Toast.LENGTH_SHORT).show();
@@ -89,6 +104,8 @@ public class SelectedRecipeFragment extends Fragment {
                next.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
+                       exoPlayerCurrentPosition=0;
+                       player.seekTo(exoPlayerCurrentPosition);
            //            Toast.makeText(getActivity(), position + "", Toast.LENGTH_SHORT).show();
                        if (position < stepItems.size() - 1) {
                            position++;
@@ -96,7 +113,7 @@ public class SelectedRecipeFragment extends Fragment {
                            //    Toast.makeText(getActivity(), stepItems.size()+"", Toast.LENGTH_SHORT).show();
 
                            textView.setText(stepItems.get(position).getDescription());
-                           Uri mp4VideoUri = Uri.parse(stepItems.get(position).getVideoURL());
+                            mp4VideoUri = Uri.parse(stepItems.get(position).getVideoURL());
                            playstream(mp4VideoUri);
                        } else
                            Toast.makeText(getActivity(), "Nothing Next", Toast.LENGTH_SHORT).show();
@@ -108,6 +125,8 @@ public class SelectedRecipeFragment extends Fragment {
                 previous.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        exoPlayerCurrentPosition=0;
+                        player.seekTo(exoPlayerCurrentPosition);
                         if (position > 0) {
                             position--;
 
@@ -122,30 +141,7 @@ public class SelectedRecipeFragment extends Fragment {
                     }
                 });
             }
-            Handler mainHandler = new Handler();
-            BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
-            TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
-            TrackSelector trackSelector = new DefaultTrackSelector(mainHandler, videoTrackSelectionFactory);
-
-// 2. Create a default LoadControl
-            LoadControl loadControl = new DefaultLoadControl();
-
-// 3. Create the player
-            player = ExoPlayerFactory.newSimpleInstance(this.getActivity(), trackSelector, loadControl);
-            simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
-            simpleExoPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.player_view);
-
-//Set media controller
-            simpleExoPlayerView.setUseController(true);
-            simpleExoPlayerView.requestFocus();
-
-// Bind the player to the view.
-            simpleExoPlayerView.setPlayer(player);
-
-            Uri mp4VideoUri = Uri.parse(stepItem.getVideoURL());
-            Log.v("VIDOE URI0",stepItem.getVideoURL());
-            playstream(mp4VideoUri);
-          // Measures bandwidth during playback. Can be null if not required.
+            init();
 
 
       }
@@ -156,6 +152,44 @@ public class SelectedRecipeFragment extends Fragment {
         return rootView;
     }
 
+    void init()
+    {
+        Handler mainHandler = new Handler();
+        BandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
+        TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveVideoTrackSelection.Factory(bandwidthMeter);
+        TrackSelector trackSelector = new DefaultTrackSelector(mainHandler, videoTrackSelectionFactory);
+
+// 2. Create a default LoadControl
+        LoadControl loadControl = new DefaultLoadControl();
+
+// 3. Create the player
+        player = ExoPlayerFactory.newSimpleInstance(this.getActivity(), trackSelector, loadControl);
+        simpleExoPlayerView = new SimpleExoPlayerView(this.getActivity());
+        simpleExoPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.player_view);
+
+//Set media controller
+        simpleExoPlayerView.setUseController(true);
+        simpleExoPlayerView.requestFocus();
+        if(exoPlayerCurrentPosition != 0)
+            player.seekTo(exoPlayerCurrentPosition);
+
+// Bind the player to the view.
+        simpleExoPlayerView.setPlayer(player);
+
+        Uri mp4VideoUri = Uri.parse(stepItem.getVideoURL());
+        Log.v("VIDOE URI0",stepItem.getVideoURL());
+        playstream(mp4VideoUri);
+        // Measures bandwidth during playback. Can be null if not required.
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.e("Savi: ",String.valueOf(exoPlayerCurrentPosition));
+        outState.putLong("exoPlayerCurrentPosition", exoPlayerCurrentPosition);
+        outState.putInt("ItemPosition", position);
+
+    }
 
     void playstream(Uri mp4VideoUri)
     {
@@ -233,25 +267,33 @@ public class SelectedRecipeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.v(TAG,"onResume()...");
+        init();
+
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        Log.v(TAG,"onPause()...");
-        if(player!=null) {
+        releasePlayer();
+    }
+
+
+
+    private void releasePlayer() {
+        try {
+            exoPlayerCurrentPosition = player.getCurrentPosition();
+            player.stop();
             player.release();
+            player = null;
+        } catch (Exception e) {
+
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.v(TAG,"onDestroy()...");
-     if(player!=null) {
-         player.release();
-     }
-
-    }
 
 }
