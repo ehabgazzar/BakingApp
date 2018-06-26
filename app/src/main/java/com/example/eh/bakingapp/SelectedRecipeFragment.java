@@ -4,7 +4,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eh.bakingapp.models.RecipeItem;
 import com.example.eh.bakingapp.models.StepItem;
-import com.example.eh.bakingapp.utilities.DividerItemDecoration;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -29,7 +26,6 @@ import com.google.android.exoplayer2.extractor.ExtractorsFactory;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.LoopingMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
 
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
@@ -42,9 +38,6 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Eh on 6/30/2017.
@@ -67,13 +60,14 @@ public class SelectedRecipeFragment extends Fragment {
     static final String RECIPE_POSITION = "Recipes_position";
     private Uri mp4VideoUri;
     public long exoPlayerCurrentPosition = 0;
+    private boolean WhenReady;
     public SelectedRecipeFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
+        WhenReady =true;
         Bundle arguments = getArguments();
         if (arguments != null) {
             stepItems= new ArrayList<>();
@@ -87,12 +81,14 @@ public class SelectedRecipeFragment extends Fragment {
                 exoPlayerCurrentPosition = savedInstanceState.getLong("exoPlayerCurrentPosition");
                 position=savedInstanceState.getInt("ItemPosition");
                 stepItem=stepItems.get(position);
+                WhenReady = savedInstanceState.getBoolean("WhenReady");
                 //mExoPlayer.seekTo(videoPosition);
                 Log.e("mExoPlayer. will be",exoPlayerCurrentPosition+");");
             }
             else {
                 position = Integer.parseInt(arguments.getString(SelectedRecipeFragment.RECIPE_POSITION));
                 stepItem=arguments.getParcelable(SelectedRecipeFragment.Selected_RECIPE);
+
             }
 
 
@@ -175,6 +171,7 @@ public class SelectedRecipeFragment extends Fragment {
 
 // Bind the player to the view.
         simpleExoPlayerView.setPlayer(player);
+        player.setPlayWhenReady(WhenReady);
 
         Uri mp4VideoUri = Uri.parse(stepItem.getVideoURL());
         Log.v("VIDOE URI0",stepItem.getVideoURL());
@@ -188,7 +185,7 @@ public class SelectedRecipeFragment extends Fragment {
         Log.e("Savi: ",String.valueOf(exoPlayerCurrentPosition));
         outState.putLong("exoPlayerCurrentPosition", exoPlayerCurrentPosition);
         outState.putInt("ItemPosition", position);
-
+        outState.putBoolean("WhenReady", WhenReady);
     }
 
     void playstream(Uri mp4VideoUri)
@@ -252,7 +249,7 @@ public class SelectedRecipeFragment extends Fragment {
         super.onStop();
         Log.v(TAG,"onStop()...");
         if(player!=null) {
-            player.release();
+            releasePlayer();
         }
     }
 
@@ -279,7 +276,9 @@ public class SelectedRecipeFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        releasePlayer();
+        if(player!=null) {
+            releasePlayer();
+        }
     }
 
 
@@ -287,6 +286,7 @@ public class SelectedRecipeFragment extends Fragment {
     private void releasePlayer() {
         try {
             exoPlayerCurrentPosition = player.getCurrentPosition();
+            WhenReady = player.getPlayWhenReady();
             player.stop();
             player.release();
             player = null;
